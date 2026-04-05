@@ -2,7 +2,7 @@ import os
 
 # --- IDENTIDAD Y TOKENS ---
 TELEGRAM_TOKEN = "TU_BOT_TOKEN_AQUÍ"
-CHANNEL_ID = -1001234567890  # Reemplaza con el ID de tu canal
+CHANNEL_ID = -1003584710096  # Reemplaza con el ID de tu canal
 
 # --- INSTAGRAM AUTH ---
 INSTA_USER = "tu_usuario"
