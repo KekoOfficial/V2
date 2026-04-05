@@ -1,31 +1,33 @@
 from instagrapi import Client
 import config
 import os
+import logging
 
 def upload_reel(video_path, caption=config.DEFAULT_CAPTION):
     cl = Client()
     session_path = os.path.join(config.SESSIONS_FOLDER, f"{config.INSTA_USER}.json")
     
     try:
-        # Intentar cargar sesión guardada
+        # 1. Cargar sesión previa para evitar logueos constantes
         if os.path.exists(session_path):
             cl.load_settings(session_path)
-            print(f"✅ Sesión de {config.INSTA_USER} cargada.")
+            print(f"✅ Sesión de @{config.INSTA_USER} recuperada.")
         
+        # 2. Login (usa las cookies si existen, si no, usa pass)
         cl.login(config.INSTA_USER, config.INSTA_PASS)
-        cl.dump_settings(session_path) # Guardar/Actualizar cookies
+        cl.dump_settings(session_path) # Guardar cookies actualizadas
         
-        print(f"🚀 Subiendo Reel a @{config.INSTA_USER}...")
+        print(f"🚀 Subiendo Reel a Instagram...")
         
-        # Subida oficial
+        # 3. Subida con miniatura automática
         media = cl.clip_upload(
             video_path,
             caption=caption
         )
         
-        print(f"✨ Éxito: Reel publicado (ID: {media.pk})")
+        print(f"✨ ¡ÉXITO! Reel publicado (ID: {media.pk})")
         return True
 
     except Exception as e:
-        print(f"❌ Error crítico en Instagram: {e}")
+        print(f"❌ Error en Instagram: {e}")
         return False
